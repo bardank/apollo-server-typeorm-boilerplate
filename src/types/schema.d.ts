@@ -22,11 +22,17 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
-login: IUser | null;
+login: ILogin;
 }
 
 interface ILoginOnQueryArguments {
 email: string;
+}
+
+interface ILogin {
+__typename: "Login";
+user: IUser;
+token: string;
 }
 
 interface IMutation {

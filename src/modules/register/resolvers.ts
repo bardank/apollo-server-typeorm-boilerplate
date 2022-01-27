@@ -1,23 +1,23 @@
 import { User } from "../../entity/User";
-// import * as bcrypt from "bcryptjs";
+import { ResolverMap } from "../../types/graphql-utils";
+import {  ApolloError } from "apollo-server-express";
 
 // Provide resolver functions for your schema fields
-export const resolvers = {
-  Query: {
-    login: async (_: any, args: any) => {
-      const { email } = args;
-      const user = await User.findOne({
-        where: { email },
-        select: ["id", "fullName", "email"],
-      });
-      console.log(user);
-      return user;
-    },
-  },
+export const resolvers: ResolverMap = {
   Mutation: {
-    register: async (_: any, args: any) => {
-      const { fullName, email, password } = args;
+    register: async (_: any, args) => {
       try {
+        const { fullName, email, password } = args;
+
+        const userAlreadyExists = await User.findOne({
+          where: { email },
+          select: ["id"],
+        });
+
+        if (userAlreadyExists) {
+          throw new ApolloError("Email is already registred." ,  "403");
+        }
+
         const user = User.create({
           fullName,
           email,
@@ -27,8 +27,7 @@ export const resolvers = {
         await user.save();
         return true;
       } catch (error) {
-        console.log(error);
-        return false;
+        throw new ApolloError(error.message, '500');
       }
     },
   },

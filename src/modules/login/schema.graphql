@@ -1,0 +1,12 @@
+# import User from "../shared/User.graphql"
+
+
+
+type Query {
+  login(email: String!): Login!
+}
+
+type Login{
+  user: User!
+  token : String!
+}

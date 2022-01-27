@@ -6,6 +6,7 @@
     "@gql2ts/types": "^1.9.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/glob": "^7.2.0",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^8.0.29",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
@@ -21,6 +22,7 @@
     "express": "^4.17.2",
     "glob": "^7.2.0",
     "graphql": "^16.2.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.41"

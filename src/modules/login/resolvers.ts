@@ -1,7 +1,8 @@
 import { User } from "../../entity/User";
 import { ResolverMap } from "../../types/graphql-utils";
 import { createSendToken } from "../../utils/authController";
-import { ApolloError, AuthenticationError } from "apollo-server-core";
+import { ApolloError } from "apollo-server-core";
+import { duplicateEmail } from "../register/errorMessages";
 
 export const resolvers : ResolverMap = {
   Query: {
@@ -15,9 +16,14 @@ export const resolvers : ResolverMap = {
         if (user) {
           const token = createSendToken(user.id);
           return { token, user };
-        }else{
-          throw new AuthenticationError("Invalid Credentails")
         }
+        return {
+          node: "email",
+          message: duplicateEmail,
+        };
+        // }else{
+        //   throw new AuthenticationError("Invalid Credentails")
+        // }
       } catch (error) {
         throw new ApolloError(error.message, "500");
       }

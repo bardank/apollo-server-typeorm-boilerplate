@@ -1,11 +1,22 @@
+import { ApolloError } from "apollo-server-core";
 import { User } from "../../entity/User";
 import { ResolverMap } from "../../types/graphql-utils";
-import {  ApolloError } from "apollo-server-express";
-
+import { duplicateEmail } from "./errorMessages";
 // Provide resolver functions for your schema fields
 export const resolvers: ResolverMap = {
+  RegisterResult :{
+       __resolveType(obj:any) {
+      if (obj.node) {
+        return 'Error';
+      }      
+      if (obj.message) {
+        return 'Sucess';
+      }      return null;
+      
+    }
+  },
   Mutation: {
-    register: async (_: any, args) => {
+    register: async (_: any, args: GQL.IRegisterOnMutationArguments) => {
       try {
         const { fullName, email, password } = args;
 
@@ -14,8 +25,13 @@ export const resolvers: ResolverMap = {
           select: ["id"],
         });
 
+        const error = {
+            node: "email",
+            message: duplicateEmail,
+        };
+
         if (userAlreadyExists) {
-          throw new ApolloError("Email is already registred." ,  "403");
+          return error
         }
 
         const user = User.create({
@@ -23,12 +39,13 @@ export const resolvers: ResolverMap = {
           email,
           password,
         });
-
+        
         await user.save();
-        return true;
+        return error;
       } catch (error) {
-        throw new ApolloError(error.message, '500');
+        console.log(error);
+        throw new ApolloError(error);
       }
-    },
+    }
   },
 };

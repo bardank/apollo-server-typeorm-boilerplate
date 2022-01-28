@@ -1,9 +1,12 @@
 # import User from "../shared/User.graphql"
+# import Error from "../shared/Error.graphql"
 
 
+
+union loginResult = Login | Error
 
 type Query {
-  login(email: String!): Login!
+  login(email: String!): loginResult!
 }
 
 type Login{

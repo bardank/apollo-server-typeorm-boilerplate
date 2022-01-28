@@ -29,6 +29,6 @@
   },
   "scripts": {
     "start": " nodemon --exec ts-node --files src/index.ts",
-    "gen-schema-types": "ts-node src/scripts/createTypes.ts"
+    "gen-schema-types": "ts-node --files src/scripts/createTypes.ts"
   }
 }

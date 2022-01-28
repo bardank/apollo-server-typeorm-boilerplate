@@ -20,9 +20,13 @@ line: number;
 column: number;
 }
 
+type loginResult = ILogin | IError;
+
+
+
 interface IQuery {
 __typename: "Query";
-login: ILogin;
+login: loginResult;
 }
 
 interface ILoginOnQueryArguments {
@@ -35,15 +39,30 @@ user: IUser;
 token: string;
 }
 
+type RegisterResult = ISuccess | IError;
+
+
+
 interface IMutation {
 __typename: "Mutation";
-register: boolean;
+register: RegisterResult;
 }
 
 interface IRegisterOnMutationArguments {
 fullName: string;
-email?: string | null;
+email: string;
 password: string;
+}
+
+interface IError {
+__typename: "Error";
+node: string;
+message: string;
+}
+
+interface ISuccess {
+__typename: "Success";
+message: string;
 }
 
 interface IUser {

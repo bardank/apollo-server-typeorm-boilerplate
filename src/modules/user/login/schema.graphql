@@ -1,0 +1,17 @@
+# import User from "../../shared/User.graphql"
+# import Errors from "../../shared/Error.graphql"
+
+
+type Login {
+  user: User!
+  token: String!
+}
+
+union LoginResult = Login | Errors
+
+
+type Query {
+  login(email: String!, password: String!): LoginResult!
+}
+
+

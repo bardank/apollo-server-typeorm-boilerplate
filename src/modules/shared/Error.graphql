@@ -1,0 +1,9 @@
+type Error {
+  node: String
+  message: String!,
+  statusCode: String
+}
+
+type Errors  {
+  errors : [Error!]
+}

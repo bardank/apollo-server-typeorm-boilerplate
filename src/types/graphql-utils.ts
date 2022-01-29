@@ -1,8 +1,9 @@
-
 export interface Context {
   url: string;
   req: Express.Request;
+  user: GQL.IUser | null ;
 }
+
 
 export type Resolver = (
   parent: any,
@@ -22,5 +23,13 @@ export type GraphQLMiddlewareFunc = (
 export interface ResolverMap {
   [key: string]: {
     [key: string]: Resolver;
+  };
+}
+
+export interface DecodedToken {
+  [key: string]: {
+    [user: string]: {
+      id: string,
+    };
   };
 }

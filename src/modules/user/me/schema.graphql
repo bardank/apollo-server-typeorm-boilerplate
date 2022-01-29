@@ -1,0 +1,9 @@
+# import User from "../../shared/User.graphql"
+# import Errors from "../../shared/Error.graphql"
+
+
+union Me = User | Errors
+
+type Query {
+  me: Me!
+}

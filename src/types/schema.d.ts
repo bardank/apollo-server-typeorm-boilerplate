@@ -45,25 +45,30 @@ fullName: string;
 email: string;
 }
 
-type LoginResult = ILogin | IErrors;
-
-
-
 interface ILogin {
 __typename: "Login";
 user: IUser;
 token: string;
 }
 
+type LoginResult = ILogin | IErrors;
+
+
+
 interface IQuery {
 __typename: "Query";
 login: LoginResult;
+me: Me;
 }
 
 interface ILoginOnQueryArguments {
 email: string;
 password: string;
 }
+
+type Me = IUser | IErrors;
+
+
 
 type RegisterResult = ISuccess | IErrors;
 

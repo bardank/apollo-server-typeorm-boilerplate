@@ -1,8 +1,0 @@
-# import Error from "../shared/Error.graphql"
-# import Success from "../shared/Success.graphql"
-
-union RegisterResult = Success | Error
-
-type Mutation {
-  register(fullName: String!, email: String!, password: String!): RegisterResult!
-}

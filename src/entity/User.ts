@@ -5,14 +5,16 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   BeforeInsert,
+  CreateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 
 @Entity("users")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid") id: string;
 
-  @Column("varchar", {length: 30})
-  fullName: string
+  @Column("varchar", { length: 30 })
+  fullName: string;
 
   @Column("varchar", { length: 255 })
   email: string;
@@ -24,6 +26,19 @@ export class User extends BaseEntity {
 
   @Column("boolean", { default: false })
   forgotPasswordLocked: boolean;
+
+  @CreateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updated_at: Date;
 
   @BeforeInsert()
   async hashPasswordBeforeInsert() {

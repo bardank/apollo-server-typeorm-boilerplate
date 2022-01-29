@@ -20,18 +20,34 @@ line: number;
 column: number;
 }
 
-type loginResult = ILogin | IError;
-
-
-
-interface IQuery {
-__typename: "Query";
-login: loginResult;
+interface IError {
+__typename: "Error";
+node: string | null;
+message: string;
+statusCode: string | null;
 }
 
-interface ILoginOnQueryArguments {
+interface IErrors {
+__typename: "Errors";
+errors: Array<IError> | null;
+}
+
+interface ISuccess {
+__typename: "Success";
+message: string;
+statusCode: string;
+}
+
+interface IUser {
+__typename: "User";
+id: string;
+fullName: string;
 email: string;
 }
+
+type LoginResult = ILogin | IErrors;
+
+
 
 interface ILogin {
 __typename: "Login";
@@ -39,7 +55,17 @@ user: IUser;
 token: string;
 }
 
-type RegisterResult = ISuccess | IError;
+interface IQuery {
+__typename: "Query";
+login: LoginResult;
+}
+
+interface ILoginOnQueryArguments {
+email: string;
+password: string;
+}
+
+type RegisterResult = ISuccess | IErrors;
 
 
 
@@ -52,24 +78,6 @@ interface IRegisterOnMutationArguments {
 fullName: string;
 email: string;
 password: string;
-}
-
-interface IError {
-__typename: "Error";
-node: string;
-message: string;
-}
-
-interface ISuccess {
-__typename: "Success";
-message: string;
-}
-
-interface IUser {
-__typename: "User";
-id: string;
-fullName: string;
-email: string;
 }
 }
 
